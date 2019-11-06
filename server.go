@@ -1,12 +1,17 @@
 package main
 
 import (
+	"os"
 	"net/http"
 	"io/ioutil"
 	"log"
 	"encoding/json"
 	"fmt"
+	"time"
 	"github.com/gin-gonic/gin"
+	"github.com/faiface/beep"
+	"github.com/faiface/beep/mp3"
+	"github.com/faiface/beep/speaker"
 )
 
 func main() {
@@ -14,8 +19,30 @@ func main() {
 
 	r.GET("/music", getFileNames)
 	r.POST("/upload", upFile)
+	r.GET("/start", startSound)
 
 	r.Run()
+}
+
+func startSound(c *gin.Context) {
+	path := c.Query("path")
+	f, err := os.Open(path)
+	if err != nil {
+		log.Println(err)
+	}
+	s, format, err := mp3.Decode(f)
+	if err != nil {
+		log.Println(err)
+	}
+	err = speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+	if err != nil {
+		log.Println(err)
+	}
+	done := make(chan struct{})
+	speaker.Play(beep.Seq(s, beep.Callback(func() {
+		close(done)
+	})))
+	_ = <-done
 }
 
 type MusicFile struct {
