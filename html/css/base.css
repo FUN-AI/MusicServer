@@ -1,0 +1,22 @@
+/* 特にIDやクラスに関係ない全体的な指定を書く */
+
+* {
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	font-weight: bold;
+}
+
+body {
+	margin: 1em;
+	background-color: #EFEFEF;
+	background-image:
+	 radial-gradient(#26A69A 1px, transparent 1px);
+	background-size: 20px 20px;
+}
+
+ul {
+	list-style: square;
+}
+
+li {
+	height: 1.2em;
+}

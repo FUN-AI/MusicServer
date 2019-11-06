@@ -1,0 +1,61 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#222222">
+	<title>音楽サーバー</title>
+	<link rel="stylesheet" type="text/css" href="./css/base.css">
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+	<link rel="stylesheet" type="text/css" href="./css/RemoteController.css">
+	<link rel="stylesheet" type="text/css" href="./css/MainTitle.css">
+	<script type="text/javascript" src="./js/index.js"></script>
+</head>
+
+<body>
+
+	<!-- topページ（認証？何それ美味しいの？） -->
+	<div id="MainTitle">
+		<h1>Music Server</h1>
+		<a href="https://github.com/FUN-AI/MusicServer">https://github.com/FUN-AI/MusicServer</a>
+		<p id="MainVer">Update 2019-11-07</p>
+		<hr>
+	</div>
+
+	<!-- 仮のリモコン 面倒なのでGridレイアウト -->
+	<div id="RemoteController">
+		<p id="RemoteController--title">再生中の曲はありません</p>
+		<a id="RemoteController--Restart" class="RemoteController_button">＜</a>
+		<a id="RemoteController--Stop" class="RemoteController_button">■</a>
+		<a id="RemoteController--Start" class="RemoteController_button">＞</a>
+		<hr id="RemoteController--Bar" />
+		<a id="RemoteController--Volume" class="RemoteController_text">Volume</a>
+		<a id="RemoteController--VolumeDown" class="RemoteController_button">↓</a>
+		<a id="RemoteController--VolumeUp" class="RemoteController_button">↑</a>
+	</div>
+
+	<!-- 音楽の管理はプレイリストの作成、編集、削除と音楽の追加で行う -->
+	<div id="PlayList-01">
+		<h2>人気のプレイリスト</h2>
+		<ul>
+			<li>たつお01</li>
+			<li>えびのプレイリスト</li>
+			<li>たつお03</li>
+			<li>IA #001</li>
+		</ul>
+		<p>検索</p>
+	</div>
+
+	<!-- 管理用 -->
+	<div id="PlayList-02">
+		<h2>プレイリストの管理</h2>
+		<ul>
+			<li>新規作成</li>
+			<li>曲のアップロード</li>
+			<li>曲のリスト</li>
+		</ul>
+	</div>
+
+</body>
+
+</html>
