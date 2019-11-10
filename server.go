@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/faiface/beep"
@@ -18,13 +19,32 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.GET("/music", getFileNames)
-	r.POST("/upload", upFile)
-	r.GET("/start", func(c *gin.Context) {
+	var musicListName string
+
+	r.GET("/musicFileNameAll", getFileNames)
+	r.POST("/upload", upMusicFile)
+	r.GET("/start/music", func(c *gin.Context) {
 		path := c.Query("path")
 		startSound(path)
 		c.JSON(http.StatusOK, gin.H{
 			"res": "started music",
+		})
+	})
+	r.GET("/start/playList", func(c *gin.Context) {
+		listName := c.Query("name")
+		if listName != musicListName {
+			musicPointer = 0
+			musicListName = listName
+		}
+		musicPointer = startPlayList(listName)
+		c.JSON(http.StatusOK, gin.H{
+			"res": "started play list",
+		})
+	})
+	r.GET("/next", func(c *gin.Context) {
+		startPlayList(musicListName)
+		c.JSON(http.StatusOK, gin.H{
+			"res": "started play list",
 		})
 	})
 	r.GET("/stop", func(c *gin.Context) {
@@ -39,8 +59,86 @@ func main() {
 			"res": "restarted music",
 		})
 	})
+	r.POST("/makePlayList", func(c *gin.Context) {
+		listName := c.Query("name")
+		strMusicList := c.Query("musics")
+		var MusicList []MusicFile
+		for _, i := range strings.Split(strMusicList, ",") {
+			MusicList = append(MusicList, MusicFile{"./music/", i})
+		}
+		makePlaylist(listName, MusicList)
+		c.JSON(http.StatusOK, gin.H{
+			"res": "made play list",
+		})
+	})
+	r.GET("/playListNameAll", func(c *gin.Context) {
+		out := readPlayList()
+		var names []string
+		for _, n := range out {
+			names = append(names, n.ListName)
+		}
+		c.JSON(http.StatusOK, names)
+	})
+	r.GET("/playListDetail", func(c *gin.Context) {
+		listName := c.Query("name")
+		var aPlayList PlayList
+		for _, n := range readPlayList() {
+			if n.ListName == listName {
+				aPlayList = n
+				break
+			}
+		}
+		jsonPL, _ := json.Marshal(aPlayList)
+		c.JSON(http.StatusOK, string(jsonPL))
+	})
 
 	r.Run()
+}
+
+type MusicFile struct {
+	Path string `json:"path"`
+	Name string `json:"name"`
+}
+
+type PlayList struct {
+	ListName string      `json:"listName"`
+	Musics   []MusicFile `json:"musics"`
+}
+
+func startPlayList(listName string) {
+	var MusicFiles []MusicFile
+	for _, n := range readPlayList() {
+		if n.ListName == listName {
+			MusicFiles = n.Musics
+			break
+		}
+	}
+	var stream beep.Streamer
+	for i, n := range MusicFiles {
+		f, _ := os.Open(n.Path + n.Name)
+		if i == 0 {
+			s, format, _ := mp3.Decode(f)
+			speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+			stream = beep.Seq(s)
+		} else {
+			s, _, _ := mp3.Decode(f)
+			stream = beep.Seq(s)
+		}
+	}
+	speaker.Play(stream)
+}
+
+func nextPlayList(listName string) {
+	var MusicFiles []MusicFile
+	for _, n := range readPlayList() {
+		if n.ListName == listName {
+			MusicFiles = n.Musics
+			break
+		}
+	}
+	var stream beep.Streamer
+	for i, n := range MusicFiles {
+	}
 }
 
 func startSound(path string) {
@@ -57,11 +155,6 @@ func startSound(path string) {
 		log.Println(err)
 	}
 	speaker.Play(beep.Seq(s))
-}
-
-type MusicFile struct {
-	Path string `json:"path"`
-	Name string `json:"name"`
 }
 
 func getFileNames(c *gin.Context) {
@@ -83,7 +176,29 @@ func getFileNames(c *gin.Context) {
 	}
 }
 
-func upFile(c *gin.Context) {
+func makePlaylist(listName string, musicList []MusicFile) {
+	list := PlayList{listName, musicList}
+	lists := readPlayList()
+	lists = append(lists, list)
+	out, err := json.MarshalIndent(lists, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+
+	ioutil.WriteFile("PlayList.json", out, os.ModePerm)
+}
+
+func readPlayList() []PlayList {
+	raw, err := ioutil.ReadFile("./PlayList.json")
+	if err != nil {
+		log.Println(err.Error())
+	}
+	var lists []PlayList
+	json.Unmarshal(raw, &lists)
+	return lists
+}
+
+func upMusicFile(c *gin.Context) {
 	form, _ := c.MultipartForm()
 	files := form.File["file"]
 

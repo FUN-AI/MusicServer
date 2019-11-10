@@ -1,0 +1,19 @@
+[
+    {
+        "listName": "hogehoge",
+        "musics": null
+    },
+    {
+        "listName": "hoge",
+        "musics": [
+            {
+                "path": "./music/",
+                "name": "4 ぼんじんパレード - 和田たけあき(くらげP).mp3"
+            },
+            {
+                "path": "./music/",
+                "name": "4 ビースト・ダンス - 和田たけあき(くらげP).mp3"
+            }
+        ]
+    }
+]
