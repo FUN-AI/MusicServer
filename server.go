@@ -1,17 +1,18 @@
 package main
 
 import (
-	"os"
-	"net/http"
-	"io/ioutil"
-	"log"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
 	"time"
-	"github.com/gin-gonic/gin"
+
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/mp3"
 	"github.com/faiface/beep/speaker"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -19,13 +20,30 @@ func main() {
 
 	r.GET("/music", getFileNames)
 	r.POST("/upload", upFile)
-	r.GET("/start", startSound)
+	r.GET("/start", func(c *gin.Context) {
+		path := c.Query("path")
+		startSound(path)
+		c.JSON(http.StatusOK, gin.H{
+			"res": "started music",
+		})
+	})
+	r.GET("/stop", func(c *gin.Context) {
+		speaker.Lock()
+		c.JSON(http.StatusOK, gin.H{
+			"res": "stoped music",
+		})
+	})
+	r.GET("/restart", func(c *gin.Context) {
+		speaker.Unlock()
+		c.JSON(http.StatusOK, gin.H{
+			"res": "restarted music",
+		})
+	})
 
 	r.Run()
 }
 
-func startSound(c *gin.Context) {
-	path := c.Query("path")
+func startSound(path string) {
 	f, err := os.Open(path)
 	if err != nil {
 		log.Println(err)
@@ -38,11 +56,7 @@ func startSound(c *gin.Context) {
 	if err != nil {
 		log.Println(err)
 	}
-	done := make(chan struct{})
-	speaker.Play(beep.Seq(s, beep.Callback(func() {
-		close(done)
-	})))
-	_ = <-done
+	speaker.Play(beep.Seq(s))
 }
 
 type MusicFile struct {
@@ -54,17 +68,17 @@ func getFileNames(c *gin.Context) {
 	dir := "./music"
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error":err})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 	}
 
 	var MF []MusicFile
 	for _, file := range files {
-		MF = append(MF, MusicFile{Path:dir, Name:file.Name()} )
+		MF = append(MF, MusicFile{Path: dir, Name: file.Name()})
 	}
 	out, _ := json.Marshal(MF)
 	if len(files) <= 0 {
-		c.JSON(http.StatusOK, gin.H{"response":"No music file"})
-	}else{
+		c.JSON(http.StatusOK, gin.H{"res": "No music file"})
+	} else {
 		c.JSON(http.StatusOK, string(out))
 	}
 }
@@ -82,5 +96,7 @@ func upFile(c *gin.Context) {
 	}
 
 	fmt.Println(c.PostForm("key"))
-	c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
+	c.JSON(http.StatusOK, gin.H{
+		"res": fmt.Sprintf("%d files uploaded!", len(files)),
+	})
 }
