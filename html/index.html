@@ -6,6 +6,7 @@
 	<meta name="theme-color" content="#222222">
 	<link rel="shortcut icon" href="./img/favicon.gif">
 	<title>音楽サーバー</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/yakuhanjp/1.3.1/css/yakuhanjp_s.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/base.css">
 	<link rel="stylesheet" type="text/css" href="./css/index.css">
 	<link rel="stylesheet" type="text/css" href="./css/RemoteController.css">
@@ -26,17 +27,25 @@
 	<!-- 仮のリモコン 面倒なのでGridレイアウト -->
 	<div id="RemoteController">
 		<p id="RemoteController--title">再生中の曲はありません</p>
-		<a id="RemoteController--Restart" class="RemoteController_button">＜</a>
-		<a id="RemoteController--Stop" class="RemoteController_button">■</a>
-		<a id="RemoteController--Start" class="RemoteController_button">＞</a>
+		<a href="javascript:void(0);" onclick="control_Music(-1)" id="RemoteController--Restart"
+			class="RemoteController_button">＜</a>
+		<a href="javascript:void(0);" onclick="control_Music(0)" id="RemoteController--Stop"
+			class="RemoteController_button">■</a>
+		<a href="javascript:void(0);" onclick="control_Music(1)" id="RemoteController--Start"
+			class="RemoteController_button">＞</a>
 		<hr id="RemoteController--Bar" />
 		<a id="RemoteController--Volume" class="RemoteController_text">Volume</a>
-		<a id="RemoteController--VolumeDown" class="RemoteController_button">↓</a>
-		<a id="RemoteController--VolumeUp" class="RemoteController_button">↑</a>
+		<a href="javascript:void(0);" onclick="control_Volume(-1)" id="RemoteController--VolumeDown"
+			class="RemoteController_button">↓</a>
+		<a href="javascript:void(0);" onclick="control_Volume(1)" d="RemoteController--VolumeUp"
+			class="RemoteController_button">↑</a>
 	</div>
 
 	<!-- 音楽の管理はプレイリストの作成、編集、削除と音楽の追加で行う -->
 	<div id="PlayList-01">
+		<p>
+			<a href="javascript:void(0);">プレイリストの検索</a>
+		</p>
 		<h2>人気のプレイリスト</h2>
 		<ul>
 			<li>たつお01</li>
@@ -44,16 +53,15 @@
 			<li>たつお03</li>
 			<li>IA #001</li>
 		</ul>
-		<p>検索</p>
 	</div>
 
 	<!-- 管理用 -->
 	<div id="PlayList-02">
 		<h2>プレイリストの管理</h2>
 		<ul>
-			<li>新規作成</li>
-			<li>曲のアップロード</li>
-			<li>曲のリスト</li>
+			<li><a href="javascript:void(0);">新規作成</a></li>
+			<li><a href="javascript:void(0);">曲のアップロード</a></li>
+			<li><a href="javascript:void(0);">曲のリスト</a></li>
 		</ul>
 	</div>
 

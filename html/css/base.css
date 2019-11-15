@@ -1,7 +1,7 @@
 /* 特にIDやクラスに関係ない全体的な指定を書く */
 
 * {
-	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	font-family: YakuHanJPs, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 	font-weight: bold;
 }
 
@@ -19,4 +19,9 @@ ul {
 
 li {
 	height: 1.2em;
+}
+
+#RemoteController a {
+	text-decoration: none;
+	color: inherit;
 }
