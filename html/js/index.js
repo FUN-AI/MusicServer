@@ -3,7 +3,7 @@
 
 // 現在再生中の曲を問い合わせる（他のデータもjsonで欲しいな...）
 window.addEventListener("DOMContentLoaded", function () {
-	display_Playlist(["データ1","データ2"]);
+	display_Playlist(["仮データ1","仮データ2","仮データ長めの文字列","仮","仮データ長めの文字列"]);
 });
 
 // 曲を変えるための関数（引数は仮のもの）

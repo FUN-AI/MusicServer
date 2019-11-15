@@ -8,6 +8,7 @@
 	margin: 1em;
 }
 
-#PlayList--Frame{
+#PlayList--Frame {
 	display: flex;
+	flex-wrap: wrap;
 }
