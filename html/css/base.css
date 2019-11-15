@@ -1,5 +1,15 @@
 /* 特にIDやクラスに関係ない全体的な指定を書く */
 
+:root {
+	--Color_Thema: #A6DEAB;
+	--Color_Line: #9FB39B;
+	--Color_Text: #111111;
+	--Color_SubThema: #8BAB95;
+	--Color_SubLine: #111111;
+	--Color_SubText: #FFFFFF;
+	--default-radius: 3px;
+}
+
 * {
 	font-family: YakuHanJPs, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 	font-weight: bold;
@@ -8,20 +18,37 @@
 body {
 	margin: 1em;
 	background-color: #EFEFEF;
-	background-image:
-	 radial-gradient(#26A69A 1px, transparent 1px);
+	background-image: radial-gradient(#26A69A 1px, transparent 1px);
 	background-size: 20px 20px;
+	color: var(--Color_Text);
+}
+
+hr {
+	background-color: var(--Color_Line);
 }
 
 ul {
-	list-style: square;
+	list-style: none;
+	padding: 0;
 }
 
-li {
-	height: 1.2em;
+a {
+	filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.25));
 }
 
-#RemoteController a {
+a:hover {
+	filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.2));
+	opacity: 0.8;
+}
+
+a {
 	text-decoration: none;
 	color: inherit;
+	display: inherit;
+	background-color: var(--Color_Thema);
+	margin: .5em;
+	padding: 2px 1em;
+	border: 1px solid var(--Color_Line);
+	border-radius: var(--default-radius);
 }
+

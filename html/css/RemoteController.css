@@ -1,8 +1,8 @@
 /* リモコン関連の指定を書く */
 
 #RemoteController {
-	background-color: #111111;
-	color: #EEEEEE;
+	background-color: var(--Color_SubThema);
+	color: var(--Color_SubText);
 	margin: 1em;
 	padding: 1em;
 	padding-bottom: 2em;
@@ -10,7 +10,13 @@
 	grid-template: "RemoteController--title RemoteController--title RemoteController--title" "RemoteController--Restart RemoteController--Stop RemoteController--Start" "RemoteController--Bar RemoteController--Bar RemoteController--Bar" "RemoteController--Volume RemoteController--VolumeDown RemoteController--VolumeUp";
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-areas: auto auto auto auto;
-	border-radius: 6px;
+	border-radius: var(--default-radius);
+}
+
+#RemoteController > a {
+	text-decoration: none;
+	color: inherit;
+	background-color: #111111;
 }
 
 #RemoteController--title {
@@ -19,18 +25,13 @@
 	margin-top: 1em;
 }
 
-
 #RemoteController--Restart {
 	grid-area: RemoteController--Restart;
 }
 
-#RemoteController--Stop {
+#RemoteController > #RemoteController--Stop {
 	grid-area: RemoteController--Stop;
-	background-color: #EE3333;;
-}
-
-#RemoteController--Stop:hover {
-	background-color: #FF8888;
+	background-color: #ee3333;
 }
 
 #RemoteController--Start {
@@ -56,14 +57,14 @@
 }
 
 .RemoteController_button, .RemoteController_text {
-	padding: .6em;
+	padding: 0.6em;
 	margin: 2px;
 	text-align: center;
 }
 
 .RemoteController_button {
-	border: 1px solid #CCCCCC;
-	border-radius: 6px;
+	border: 1px solid #cccccc;
+	border-radius: var(--default-radius);
 }
 
 .RemoteController_button:hover {

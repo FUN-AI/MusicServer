@@ -22,13 +22,3 @@ body {
 #RemoteController {
 	grid-area: RemoteController;
 }
-
-#PlayList-01 {
-	grid-area: PlayList-01;
-	margin: 1em;
-}
-
-#PlayList-02 {
-	grid-area: PlayList-02;
-	margin: 1em;
-}
