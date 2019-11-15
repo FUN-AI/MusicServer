@@ -7,6 +7,7 @@
 	--Color_SubThema: #8BAB95;
 	--Color_SubLine: #111111;
 	--Color_SubText: #FFFFFF;
+	--Color_Background: #EFEFEF;
 	--default-radius: 3px;
 }
 
@@ -17,7 +18,7 @@
 
 body {
 	margin: 1em;
-	background-color: #EFEFEF;
+	background-color: var(--Color_Background);
 	background-image: radial-gradient(#26A69A 1px, transparent 1px);
 	background-size: 20px 20px;
 	color: var(--Color_Text);

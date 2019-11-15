@@ -12,7 +12,13 @@
 	<link rel="stylesheet" type="text/css" href="./css/RemoteController.css">
 	<link rel="stylesheet" type="text/css" href="./css/MainTitle.css">
 	<link rel="stylesheet" type="text/css" href="./css/PlayList.css">
+	<link rel="stylesheet" type="text/css" href="./css/modal.css">
+	<script type="text/javascript" src="./js/xmlhttp.js"></script>
+	<script type="text/javascript" src="./js/callback"></script>
+	<script type="text/javascript" src="./js/loadFile.js"></script>
+	<script type="text/javascript" src="./js/modal.js"></script>
 	<script type="text/javascript" src="./js/index.js"></script>
+	<script type="text/javascript" src="./js/music.js"></script>
 </head>
 
 <body>
@@ -59,9 +65,18 @@
 		<h2>プレイリストの管理</h2>
 		<ul>
 			<li><a href="javascript:void(0);">新規作成</a></li>
-			<li><a href="javascript:void(0);">曲のアップロード</a></li>
+			<li><a href="javascript:void(0);" onclick="page_Upload()">曲のアップロード</a></li>
 			<li><a href="javascript:void(0);">曲のリスト</a></li>
 		</ul>
+	</div>
+
+	<!-- モーダルウィンドウ -->
+	<div id="modal">
+		<div id="modal_Back"></div>
+		<div id="modal_Frame">
+			<div id="modal_Title">無題</div>
+			<div id="modal_Content"></div>
+		</div>
 	</div>
 
 </body>

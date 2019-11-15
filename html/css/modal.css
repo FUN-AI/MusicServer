@@ -1,0 +1,42 @@
+#modal {
+	display: none;
+}
+
+#modal_Frame {
+	display: block;
+	width: 900px;
+	height: 600px;
+	min-width: 90%;
+	min-height: 90%;
+	max-width: 80%;
+	max-height: 80%;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%) translateY(-50%);
+	background: var(--Color_Background);
+	border: 1px solid var(--Color_Line);
+	border-radius: var(--default-radius);
+	display: grid;
+	grid-template: "modal_Title" "modal_Content";
+	grid-template-rows: 2em 1fr;
+}
+
+#modal_Back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #00000099;
+	width: 100vw;
+	height: 100vh;
+}
+
+#modal_Title {
+	grid-area: modal_Title;
+	padding: .25em .75em;
+	background-color: var(--Color_SubThema);
+}
+
+#modal_Content {
+	grid-area: modal_Content;
+}
